@@ -1,7 +1,7 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: Python package
 
 on:
   push:
@@ -9,31 +9,46 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12"]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: ${{ matrix.python-version }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+
+    - name: Build Docker & Push
+      run : |
+        docker login -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker buildx create --name mybuilder --use
+        docker buildx build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app --push .  
+
+    - name : Docker deploy
+      uses : appleboy/ssh-action@master
+      with :
+        host : ${{ secrets.HOST }}
+        username : ${{ secrets.USERNAME }}
+        key : ${{ secrets.SSH_PRIVATE_KEY }}
+        port : ${{ secrets.SSH_PORT }}
+        command_timeout: 200m
+        script: |
+          cd app
+          sudo rm concal.log
+          sudo docker stop $(docker ps -q) && sudo docker rm $(docker ps -a -q) 
+          sudo docker image rm ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
+          sudo docker pull ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
+          sudo docker run -p 50000:8000 -d ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
+          
