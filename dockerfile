@@ -3,7 +3,7 @@ FROM --platform=linux/arm64 continuumio/miniconda3:24.3.0-0
 WORKDIR /root
 
 SHELL ["/bin/bash", "--login", "-c"]
-# RUN conda install python=3.10
+
 COPY environment.yml .
 RUN conda env create -f environment.yml
 
