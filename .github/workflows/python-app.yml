@@ -34,7 +34,7 @@ jobs:
       run : |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker buildx create --name mybuilder --use
-        docker buildx build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app --push .  
+        docker buildx build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app --push .  
 
     - name : Docker deploy
       uses : appleboy/ssh-action@master
@@ -48,7 +48,7 @@ jobs:
           cd app
           sudo rm concal.log
           sudo docker stop $(docker ps -q) && sudo docker rm $(docker ps -a -q) 
-          sudo docker image rm ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
-          sudo docker run -p 50000:8000 -d ${{ secrets.DOCKER_REPO }}/pokemon-model-api-app
+          sudo docker image rm ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
+          sudo docker pull ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
+          sudo docker run -p 50000:8000 -d ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
           

@@ -7,3 +7,4 @@ dependencies:
   - transformers
   - pytorch
   - Pillow
+  - peft
