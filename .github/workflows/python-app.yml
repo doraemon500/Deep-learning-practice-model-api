@@ -50,5 +50,5 @@ jobs:
           sudo docker stop $(docker ps -q) && sudo docker rm $(docker ps -a -q) 
           sudo docker image rm ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
           sudo docker pull ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
-          sudo docker run -p 50000:8000 -d ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
+          sudo docker run -p 50000:8000 -d -it ${{ secrets.DOCKER_REPO }}/deeplearning-pratice-model-api-app
           

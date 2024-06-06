@@ -4,7 +4,7 @@ WORKDIR /root
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-COPY adaptors .
+COPY adaptors ./adaptors
 
 COPY environment.yml .
 RUN conda env create -f environment.yml

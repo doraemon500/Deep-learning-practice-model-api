@@ -36,8 +36,8 @@ app.add_middleware(
 async def get_tag(text: str):
     SAVE_PATH = r"./adaptors"
     MODEL_ID = "beomi/KcELECTRA-base-v2022"
-    # categories = ['자유', '학사', '장학/행정', '학교생활', '수업', '수업/이과', '수업/문과' , '캠퍼스', '취업/진로' ,'일상생활', '음식점/카페', '취미/여가', '인간관계', '병역']
-    categories = ['학사/졸업' , '장학/행정', '학교생활', '수업/이과', '수업/문과' , '캠퍼스' ,'일상생활', '취미/여가', '인간관계', '취업/진로']
+    categories = ['학사/졸업', '장학/행정', '학교생활', '수업/이과', '수업/문과' , '캠퍼스' ,'일상생활', '취미/여가', '인간관계', '취업/진로', '자유', '수업', '음식점/카페', '병역']
+    # categories = ['학사/졸업' , '장학/행정', '학교생활', '수업/이과', '수업/문과' , '캠퍼스' ,'일상생활', '취미/여가', '인간관계', '취업/진로']
 
     tokenizer = AutoTokenizer.from_pretrained(
       MODEL_ID
@@ -70,7 +70,7 @@ async def get_tag(text: str):
     attention_mask = tokens['attention_mask'].to(device)
     pred_labels = []
 
-    for id in range(1, 11):
+    for id in range(1, 15):
         model_path = SAVE_PATH + f'/model-with-LoRA-category-id-' + str(id) + '-LoRA-adaptors'
         lora_weights = torch.load(model_path, map_location=torch.device('cpu'))
         for name, param in model.named_parameters():
