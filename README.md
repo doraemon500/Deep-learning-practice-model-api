@@ -8,7 +8,7 @@
 - **API 개발**: 구현된 모델을 제공하기 위한 FastAPI 기반 API.
 - **CI/CD 파이프라인**: GitHub Actions를 사용한 자동화 스크립트 및 구성.
 
-## 🚀 주요 프로젝트
+## 🚀 해당 모델들이 사용된 프로젝트
 - **Drawing Pokémon**: [Drwaing Pokemon](https://github.com/asomegarden/Drawing-Pokemon?tab=readme-ov-file)
 - **Communav**: [캡스톤 프로젝트](https://github.com/nbsp1221/communav)
 
