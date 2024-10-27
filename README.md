@@ -9,8 +9,8 @@
 - **CI/CD 파이프라인**: GitHub Actions를 사용한 자동화 스크립트 및 구성.
 
 ## 🚀 주요 프로젝트
-- **Drawing Pokémon**: [Asomegarden](https://github.com/asomegarden/Drawing-Pokemon?tab=readme-ov-file)와의 협업 프로젝트.
-- **Communav**: [nbsp1221](https://github.com/nbsp1221/communav)와의 협업을 통해 개발.
+- **Drawing Pokémon**: [Drwaing Pokemon](https://github.com/asomegarden/Drawing-Pokemon?tab=readme-ov-file)
+- **Communav**: [캡스톤 프로젝트](https://github.com/nbsp1221/communav)
 
 ### 🌟 Hugging Face에 배포된 모델
 - **포켓몬 분류기**: [IAmFlyingMonkey/pokemon_classifier](https://huggingface.co/IAmFlyingMonkey/pokemon_classifier)
